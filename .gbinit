@@ -1,0 +1,6 @@
+target remote localhost:1234
+layout r
+
+define hook-quit
+	set confirm off
+end

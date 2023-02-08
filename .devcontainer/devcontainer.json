@@ -1,0 +1,9 @@
+{
+  "name": "Arm_Emulator",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "forwardPorts": [
+    1234
+  ]
+}
