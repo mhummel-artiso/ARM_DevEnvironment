@@ -7,7 +7,8 @@
     "vscode": {
       "extensions": [
         "dan-c-underwood.arm",
-        "basdp.language-gas-x86"
+        "basdp.language-gas-x86",
+        "tomoki1207.pdf"
       ]
     }
   },
