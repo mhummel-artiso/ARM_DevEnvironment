@@ -3,6 +3,14 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dan-c-underwood.arm",
+        "basdp.language-gas-x86"
+      ]
+    }
+  },
   "forwardPorts": [
     1234
   ]
