@@ -34,7 +34,7 @@ chmod +x "./bin/$FILEPATH.elf"
 
 # start binary in qemu arm emulator
 echo "started ARM Emulation on port $port"
-qemu-arm -singlestep -g $DEBUG_PORT "./bin/$FILEPATH.elf"
+qemu-arm -singlestep -g $DEBUG_PORT "./bin/$FILEPATH.elf" &
 
 # start gnu debugger
 gdb-multiarch "./bin/$FILEPATH.elf"
