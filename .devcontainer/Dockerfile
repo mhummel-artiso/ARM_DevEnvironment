@@ -8,7 +8,6 @@ RUN apt-get -y install qemu
 RUN apt-get -y install qemu-user
 RUN apt-get -y install gdb-multiarch
 
-RUN echo "target remote localhost:1234" >> /etc/gdb/gdbinit
-RUN echo "layout r" >> /etc/gdb/gdbinit
+RUN echo "set auto-load safe-path /" >> /etc/gdb/gdbinit
 
 EXPOSE 1234
