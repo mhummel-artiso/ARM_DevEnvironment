@@ -9,8 +9,9 @@ RUN apt-get -y install qemu
 RUN apt-get -y install qemu-user
 RUN apt-get -y install qemu-user-static
 RUN apt-get -y install gdb-multiarch
+RUN apt-get -y install arm-none-eabi-gcc
 
-RUN apt-get -y install gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf binutils-arm-linux-gnueabihf-dbg
+# RUN apt-get -y install gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf binutils-arm-linux-gnueabihf-dbg
 
 RUN echo "set auto-load safe-path /" >> /etc/gdb/gdbinit
 
