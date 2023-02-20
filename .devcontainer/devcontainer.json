@@ -9,11 +9,9 @@
         "dan-c-underwood.arm",
         "basdp.language-gas-x86",
         "tomoki1207.pdf",
-        "qiaojie.binary-viewer"
+        "qiaojie.binary-viewer",
+        "ms-vscode.cpptools-extension-pack"
       ]
     }
-  },
-  "forwardPorts": [
-    1234
-  ]
+  }
 }

@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eo pipefail
-
+DIR="./bin"
 FILEPATH=$(echo "$1" | awk -F'.' '{print $1}')
 DEBUG_PORT=1234
 
@@ -18,23 +18,24 @@ echo $FILEPATH
 # echo $FILENAME
 DIR="bin/$(dirname "${FILEPATH}")"
 echo "Dir: $DIR"
-mkdir -p DIR
+mkdir -p $DIR
 
 # compile
 echo "compiling $FILENAME ..."
-arm-none-eabi-as "./$FILEPATH.S" -g -o "./bin/$FILEPATH.o"  | echo "compiling failed!"
+arm-none-eabi-as -g "./$FILEPATH.S" -o "$DIR/$FILEPATH.o" 
+# | echo "compiling failed!"
 
 # link
 echo "linking $FILENAME ..."
-arm-none-eabi-ld "./bin/$FILEPATH.o" -o "./bin/$FILEPATH.elf"  | echo "linking failed!"
+arm-none-eabi-ld "$DIR/$FILEPATH.o" -o "$DIR/$FILEPATH.elf"  
+#| echo "linking failed!"
 
-chmod +x "./bin/$FILEPATH.elf"
-
-# gdb --args "./bin/$FILEPATH.elf"
+chmod +x "$DIR/$FILEPATH.elf"
 
 # start binary in qemu arm emulator
+
 echo "started ARM Emulation on port $DEBUG_PORT"
-qemu-arm -singlestep -g $DEBUG_PORT "./bin/$FILEPATH.elf" &
+qemu-arm -singlestep -g $DEBUG_PORT "$DIR/$FILEPATH.elf" &
 
 # start gnu debugger
-gdb-multiarch "./bin/$FILEPATH.elf"
+gdb-multiarch "$DIR/$FILEPATH.elf"
