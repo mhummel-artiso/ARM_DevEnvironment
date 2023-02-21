@@ -1,41 +1,31 @@
 #!/bin/bash
 set -eo pipefail
-DIR="./bin"
-FILEPATH=$(echo "$1" | awk -F'.' '{print $1}')
+
+FULLFILEPATH=$(echo "$1" | awk -F'.' '{print $1}')
+FILENAME=$(echo "$FULLFILEPATH" | grep -o '[^/]*$')
+
+echo $FULLFILEPATH
+
 DEBUG_PORT=1234
 
-if [ -z $FILEPATH ]; then
-	echo "No file name provided!"
-	exit 1
+if [ -z $FILENAME ]; then
+    echo "No file name provided!"
+    exit 1
 fi
 
-echo $FILEPATH
-# FILENAME=`basename $FILEPATH`
-# echo FILEPATH
-# if [ "$FILENAME" == *.s ]; then
-# 	$FILENAME=${FILENAME::2}
-# fi
-# echo $FILENAME
-DIR="bin/$(dirname "${FILEPATH}")"
-echo "Dir: $DIR"
-mkdir -p $DIR
+mkdir -p bin
 
 # compile
 echo "compiling $FILENAME ..."
-arm-none-eabi-as -g "./$FILEPATH.S" -o "$DIR/$FILEPATH.o" 
-# | echo "compiling failed!"
+arm-none-eabi-as $FULLFILEPATH.s -g -o ./bin/$FILENAME.o | echo "compiling failed!"
 
 # link
 echo "linking $FILENAME ..."
-arm-none-eabi-ld "$DIR/$FILEPATH.o" -o "$DIR/$FILEPATH.elf"  
-#| echo "linking failed!"
-
-chmod +x "$DIR/$FILEPATH.elf"
+arm-none-eabi-ld ./bin/$FILENAME.o -o ./bin/$FILENAME | echo "linking failed!"
 
 # start binary in qemu arm emulator
-
-echo "started ARM Emulation on port $DEBUG_PORT"
-qemu-arm -singlestep -g $DEBUG_PORT "$DIR/$FILEPATH.elf" &
+echo "started ARM Emulation on port $port"
+qemu-arm -singlestep -g $DEBUG_PORT ./bin/$FILENAME &
 
 # start gnu debugger
-gdb-multiarch "$DIR/$FILEPATH.elf"
+gdb-multiarch ./bin/$FILENAME
